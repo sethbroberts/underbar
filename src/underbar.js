@@ -308,7 +308,6 @@
     _.each(rest, function (other_obj, ix) {
       _.each(other_obj, function (item, key) {
         orig[key] = item;
-        console.log(key, item);
       });
     });
     return obj;
@@ -317,6 +316,15 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var orig = arguments[0], rest = Array.prototype.slice.call(arguments, 1);
+    _.each(rest, function (other_obj, ix) {
+      _.each(other_obj, function (item, key) {
+        if (!(key in orig)) {
+          orig[key] = item;
+        }
+      });
+    });
+    return obj;    
   };
 
 
