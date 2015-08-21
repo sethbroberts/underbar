@@ -67,19 +67,28 @@
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
-    var result = -1;
+    var result = -1;                              // initialize some data structure or thing
 
-    _.each(array, function(item, index) {
-      if (item === target && result === -1) {
+    _.each(array, function(item, index) {         // update the thing
+      if (item === target && result === -1) {     // if item in array === target and you haven't seen it before (result === -1)
         result = index;
       }
     });
 
-    return result;
+    return result;                                // use the thing
   };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var result = [];
+
+    _.each(collection, function(item, index) {
+      if (test(item)) {
+        result.push(item);
+      }
+    });
+
+    return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
