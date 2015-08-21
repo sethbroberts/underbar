@@ -217,7 +217,7 @@
       }
       
     }
-    console.log(result, collection, iterator.toString());
+    // console.log(result, collection, iterator.toString());
     _.each(collection, function(item) {
       // capture output of iterator as updated result value
       result = iterator(result, item);
@@ -247,6 +247,17 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if (iterator === undefined) {       // account for case where iterator is not provided
+      iterator = _.identity;
+    }
+
+    return _.reduce(collection, function (isTrue, item) {
+      if (!isTrue) {
+        return false;
+      }
+      return Boolean(iterator(item));   // use Boolean to type-cast result of iterator(item)
+    }, true);
+
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
