@@ -264,6 +264,22 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
+    if (iterator === undefined) {       // account for case where iterator is not provided
+      iterator = _.identity;
+    }
+
+    // if it is not true that none of the objects have the property, then some must have it
+    // in other words, if not all the objects do not have the property, then some do
+    var inverse = function (item) {
+      return !iterator(item);
+    };
+
+    return !_.every(collection, inverse);
+
+    // below works, too...
+    // return (_.filter(collection, iterator).length > 0);
+
   };
 
 
