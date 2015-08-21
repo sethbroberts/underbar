@@ -117,18 +117,35 @@
     
     // this works, too:
     /*
+    var result = [];
     _.each(collection, function(item, index, collection) {
       if (!test(item)) {
         result.push(item);
       } 
     });
+    return result;
     */
 
-    return result;
+    
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+
+    // this works with arrays of numbers, not sure about arrays of other stuff
+    // put the numbers in an object, key is number (stringified), value is number
+    // only subtlety is you have to put in value to result array, not key
+    // otherwise you would get ["1", "2"] instead of [1, 2] for the input [1, 2, 2, 1, 1]
+    // worst case would be O(2N)?
+    var cache = {};
+    _.each(array, function (item, index) {
+      cache[item] = item;
+    });
+    var result = []
+    _.each(cache, function (item, key) {
+      result.push(item);
+    });
+    return result;
   };
 
 
