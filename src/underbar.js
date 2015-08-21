@@ -203,9 +203,9 @@
   _.reduce = function(collection, iterator, accumulator) {
 
     var result = accumulator;
-    // if accumulator is not equal to zero and it is 'falsey', then set 
+    // if accumulator is not equal to zero, not equal to false, and it is 'falsey', then set 
     // result to the first member of the collection
-    if (accumulator !== 0 && !accumulator) {
+    if (accumulator !== 0 && accumulator !== false && !accumulator) {
       for (var thing in collection) break;
       result = collection[thing];
 
@@ -217,7 +217,7 @@
       }
       
     }
-
+    console.log(result, collection, iterator.toString());
     _.each(collection, function(item) {
       // capture output of iterator as updated result value
       result = iterator(result, item);
@@ -230,12 +230,17 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
+
+    // example use:
+    // _.contains([4, 5, 6], 2);
+
     return _.reduce(collection, function(wasFound, item) {
       if (wasFound) {
         return true;
       }
       return item === target;
     }, false);
+
   };
 
 
