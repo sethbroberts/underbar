@@ -82,8 +82,8 @@
   _.filter = function(collection, test) {
     var result = [];
 
-    _.each(collection, function(item, index) {
-      if (test(item)) {
+    _.each(collection, function(item, index, collection) {
+      if (test(item)) {                                       // test(item) should return true or false
         result.push(item);
       }
     });
@@ -95,6 +95,36 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    
+    // _.filter(collection, test) is the array of items from collection that passed the test (PASSED)
+    // we want to filter the original collection for those items that are NOT in PASSED (index < 0)
+
+    return _.filter(collection, function (q) {
+      return _.indexOf(_.filter(collection, test), q) < 0;
+    });
+
+    /*
+    // this is equivalent to above compact version, but here probably easier to understand
+    // once we have items that passed, use that to filter out items that don't pass (two filters applied sequentially)
+    var array_of_items_that_passed = _.filter(collection, test);                   
+
+    var filter_function_to_get_items_that_did_not_pass = function (item) {         // item is from collection; remember, filter works by
+      return _.indexOf(array_of_items_that_passed, item) < 0;                      // passing one item at a time to test
+    };                                                                             // return value must be true or false for filter func
+
+    return _.filter(collection, filter_function_to_get_items_that_did_not_pass );  // just pass the function; gets called inside filter
+    */
+    
+    // this works, too:
+    /*
+    _.each(collection, function(item, index, collection) {
+      if (!test(item)) {
+        result.push(item);
+      } 
+    });
+    */
+
+    return result;
   };
 
   // Produce a duplicate-free version of the array.
