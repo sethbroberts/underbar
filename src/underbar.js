@@ -201,6 +201,29 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+
+    var result = accumulator;
+    // if accumulator is not equal to zero and it is 'falsey', then set 
+    // result to the first member of the collection
+    if (accumulator !== 0 && !accumulator) {
+      for (var thing in collection) break;
+      result = collection[thing];
+
+      // if taking this approach, remove the first item from the collection
+      if (Array.isArray(collection)) {
+        collection = collection.slice(1);
+      } else {
+        delete collection[thing];
+      }
+      
+    }
+
+    _.each(collection, function(item) {
+      // capture output of iterator as updated result value
+      result = iterator(result, item);
+    });
+
+    return result;
   };
 
   // Determine if the array or object contains a given value (using `===`).
