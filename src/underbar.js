@@ -408,6 +408,32 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+
+    // define a function that randomizes the order
+    // there's a chance this will match original order, so want to be able
+    // to call repeatedly until you get new order
+    function getRandomOrder (array) {
+      var result = [];
+      var copyarr = array.slice(0);
+      var ix, removed;
+      while (copyarr.length > 0) {
+        ix = Math.floor(Math.random()*copyarr.length);
+        removed = copyarr.splice(ix, 1);
+        result.push(removed[0]);
+      }  
+      console.log(result);
+      return result;
+    }
+
+    // now call the above function until you get a new order distinct from input array
+    // also want to insure that array.length > 1, otherwise will get stuck in endless loop
+    do {
+      var result = getRandomOrder(array);
+    }
+    while (result == array && array.length > 1);
+    
+    return result;
+
   };
 
 
