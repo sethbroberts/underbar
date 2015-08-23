@@ -385,6 +385,15 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+
+    // get the arguments
+    var args = Array.prototype.slice.call(arguments, 2); 
+
+    // http://stackoverflow.com/questions/24849/is-there-some-way-to-introduce-a-delay-in-javascript
+    // see second answer
+    // also see mistake #1 in http://www.toptal.com/javascript/10-most-common-javascript-mistakes
+    setTimeout(function () {func.apply(this, args)}, wait);
+
   };
 
 
