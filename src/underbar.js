@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-
+  //a little comment at the top
   window._ = {};
 
   // Returns whatever value is passed as the argument. This function doesn't
